@@ -25,5 +25,14 @@ if (not os.path.isdir(source_dir)):
 dest_dir = os.path.normpath(miktex.packaging.settings.paths.get_texmf_dir(package))
 if (os.path.isdir(dest_dir)):
     miktex.packaging.util.filesystem.RemoveDirectory(dest_dir)
-subprocess.call([miktex.packaging.settings.paths.TDSUTIL_EXECUTABLE, "--source-dir=" + source_dir, "--dest-dir=" + dest_dir, "install", package])
+tdsutil = [miktex.packaging.settings.paths.TDSUTIL_EXECUTABLE]
+tdsutil.append("--source-dir=" + source_dir)
+tdsutil.append("--dest-dir=" + dest_dir)
+tdsutil.append("--recipe=" + os.path.normpath(miktex.packaging.settings.paths.TDSUTIL_DEFAULT_RECIPE))
+package_recipe_file = os.path.normpath(os.path.join(miktex.packaging.settings.paths.TDSUTIL_RECIPE_DIR, package + ".ini"))
+if (os.path.isfile(package_recipe_file)):
+    tdsutil.append("--recipe=" + package_recipe_file)
+tdsutil.append("install")
+tdsutil.append(package)
+subprocess.call(tdsutil)
 miktex.packaging.info.inifile.write_ini_file(package, entry, miktex.packaging.info.md5.try_get_md5(package))

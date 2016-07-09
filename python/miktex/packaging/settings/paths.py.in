@@ -5,6 +5,8 @@ MIKTEX_TEX_CATALOGUE = "@MIKTEX_TEX_CATALOGUE@"
 MIKTEX_PACKAGE_ROOT = "@MIKTEX_PACKAGE_ROOT@"
 MD5WALK_EXECUTABLE = "@MD5WALK_EXECUTABLE@"
 TDSUTIL_EXECUTABLE = "@TDSUTIL_EXECUTABLE@"
+TDSUTIL_DEFAULT_RECIPE = "@CMAKE_SOURCE_DIR@/tdsutil/default-recipe.ini"
+TDSUTIL_RECIPE_DIR = "@CMAKE_SOURCE_DIR@/tdsutil/recipes"
 
 def get_texmf_parent_dir(package):
     return os.path.normpath(os.path.join(MIKTEX_PACKAGE_ROOT, package, "Files"))
