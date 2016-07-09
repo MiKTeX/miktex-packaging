@@ -1,0 +1,13 @@
+import os
+
+MIKTEX_CTAN = "@MIKTEX_CTAN@"
+MIKTEX_TEX_CATALOGUE = "@MIKTEX_TEX_CATALOGUE@"
+MIKTEX_PACKAGE_ROOT = "@MIKTEX_PACKAGE_ROOT@"
+MD5WALK_EXECUTABLE = "@MD5WALK_EXECUTABLE@"
+TDSUTIL_EXECUTABLE = "@TDSUTIL_EXECUTABLE@"
+
+def get_texmf_parent_dir(package):
+    return os.path.normpath(os.path.join(MIKTEX_PACKAGE_ROOT, package, "Files"))
+
+def get_texmf_dir(package):
+    return os.path.normpath(os.path.join(MIKTEX_PACKAGE_ROOT, package, "Files", "texmf"))
