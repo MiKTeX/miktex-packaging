@@ -9,7 +9,9 @@ project(miktex-packaging NONE)
 
 set(required_programs
    md5walk
+   tar
    tdsutil
+   unzip
 )
 
 foreach(p ${required_programs})

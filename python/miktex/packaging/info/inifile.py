@@ -26,55 +26,55 @@ class PackageInfo:
         self.md5 = None
         self.description = None
         filename = get_ini_filename(package);
-        if (os.path.isfile(filename)):
+        if os.path.isfile(filename):
             f = codecs.open(filename, "r", "utf-8")
             for line in f.readlines():
                 pair = line.strip().split("=")
-                if (pair[0] == "externalname"):
+                if pair[0] == "externalname":
                     self.externalname = pair[1]
-                if (pair[0] == "name"):
+                if pair[0] == "name":
                     self.name = pair[1]
-                elif (pair[0] == "title"):
+                elif pair[0] == "title":
                     self.title = pair[1]
-                elif (pair[0] == "copyright_owner"):
+                elif pair[0] == "copyright_owner":
                     self.copyright_owner = pair[1]
-                elif (pair[0] == "copyright_year"):
+                elif pair[0] == "copyright_year":
                     self.copyright_year = pair[1]
-                elif (pair[0] == "version"):
+                elif pair[0] == "version":
                     self.version = pair[1]
-                elif (pair[0] == "license_type"):
+                elif pair[0] == "license_type":
                     self.license_type = pair[1]
-                elif (pair[0] == "ctan_path"):
+                elif pair[0] == "ctan_path":
                     self.ctan_path = pair[1]
-                elif (pair[0] == "md5"):
+                elif pair[0] == "md5":
                     self.md5 = pair[1]
             f.close()
         filename = get_description_filename(package)
-        if (os.path.isfile(filename)):
+        if os.path.isfile(filename):
             f = codecs.open(filename, "r", "utf-8")
             self.description = f.read()
     def write(self):
         f = codecs.open(get_ini_filename(self.package), "w", "utf-8")
-        if (self.externalname != None):
+        if self.externalname != None:
             f.write("externalname=" + self.externalname + "\n")
-        if (self.name != None):
+        if self.name != None:
             f.write("name=" + self.name + "\n")
-        if (self.title != None):
+        if self.title != None:
             f.write("title=" + self.title + "\n")
-        if (self.copyright_owner != None):
+        if self.copyright_owner != None:
             f.write("copyright_owner=" + self.copyright_owner + "\n")
-        if (self.copyright_year != None):
+        if self.copyright_year != None:
             f.write("copyright_year=" + self.copyright_year + "\n")
-        if (self.version != None):
+        if self.version != None:
             f.write("version=" + self.version + "\n")
-        if (self.license_type != None):
+        if self.license_type != None:
             f.write("license_type=" + self.license_type + "\n")
-        if (self.ctan_path):
+        if self.ctan_path:
             f.write("ctan_path=" + self.ctan_path + "\n")
-        if (self.md5 != None):
+        if self.md5 != None:
             f.write("md5=" + self.md5 + "\n")
         f.close()
-        if (self.description != None):
+        if self.description != None:
             f = codecs.open(get_description_filename(self.package), "w", "utf-8")
             f.write(self.description)
             f.close()
@@ -82,26 +82,26 @@ class PackageInfo:
 def write_ini_file(package, entry, md5=None):
     f = codecs.open(get_ini_filename(package), "w", "utf-8")
     f.write("externalname=" + package + "\n")
-    if (entry.name == None):
+    if entry.name == None:
         f.write("name=" + package + "\n")
     else:
         f.write("name=" + entry.name + "\n")
-    if (entry.caption != None):
+    if entry.caption != None:
         f.write("title=" + entry.caption + "\n")
-    if (entry.copyright_owner != None):
+    if entry.copyright_owner != None:
         f.write("copyright_owner=" + entry.copyright_owner + "\n")
-    if (entry.copyright_year != None):
+    if entry.copyright_year != None:
         f.write("copyright_year=" + entry.copyright_year + "\n")
-    if (entry.version_number != None):
+    if entry.version_number != None:
         f.write("version=" + entry.version_number + "\n")
-    if (entry.license_type != None):
+    if entry.license_type != None:
         f.write("license_type=" + entry.license_type + "\n")
-    if (entry.ctan_path != None):
+    if entry.ctan_path != None:
         f.write("ctan_path=" + entry.ctan_path + "\n")
-    if (md5 != None):
+    if md5 != None:
         f.write("md5=" + md5 + "\n")
     f.close()
-    if (entry.description != None):
+    if entry.description != None:
         f = codecs.open(get_description_filename(package), "w", "utf-8")
         f.write(entry.description)
         f.close()

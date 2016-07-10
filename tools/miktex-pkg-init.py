@@ -8,7 +8,7 @@ import miktex.packaging.info.md5
 import miktex.packaging.info.texcatalogue
 import sys
 
-if (len(sys.argv) != 2):
+if len(sys.argv) != 2:
     sys.exit("Usage: " + sys.argv[0] + " <package-name>")
 
 package = sys.argv[1]
