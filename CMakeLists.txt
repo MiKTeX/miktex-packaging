@@ -8,11 +8,19 @@ cmake_minimum_required(VERSION 3.2.1 FATAL_ERROR)
 project(miktex-packaging NONE)
 
 set(required_programs
+   diff
    md5walk
+   rsync
    tar
    tdsutil
    unzip
 )
+
+if(WIN32 AND NOT UNIX)
+  list(APPEND required_programs
+    unix2dos
+  )
+endif()
 
 foreach(p ${required_programs})
   string(TOUPPER "${p}" p_u)
