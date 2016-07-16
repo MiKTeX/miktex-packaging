@@ -80,6 +80,9 @@ class PackageInfo:
             f.close()
 
 def write_ini_file(package, entry, md5=None):
+    package_dir = os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_PACKAGE_ROOT, package))
+    if not os.path.isdir(package_dir):
+        os.mkdir(package_dir)
     f = codecs.open(get_ini_filename(package), "w", "utf-8")
     f.write("externalname=" + package + "\n")
     if entry.name == None:

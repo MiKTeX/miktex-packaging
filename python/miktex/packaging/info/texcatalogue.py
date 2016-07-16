@@ -7,23 +7,38 @@ import re
 import sys
 import xml.etree.ElementTree as ET
 
-def get_entry_filename(package):
-    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_TEX_CATALOGUE, package[0], package + ".xml"))
+def get_entry_filename(ctan_package):
+    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_TEX_CATALOGUE, ctan_package[0], ctan_package + ".xml"))
 
 def normalize(s):
     s = re.sub("^\s+", "", s)
     s = re.sub("\s+$", "", s)
     s = re.sub("\s\s+", " ", s)
     return s
-    
+
+# Maps MiKTeX package names (key) to CTAN package names (value).
+# TODO: read from file
+ctan_packages = {
+    "cmcyralt": "cmcyralt-ltx",
+    "finbib": "finplain",
+    "tools": "latex-tools"
+}
+
+non_free_licenses = {
+    "nocommercial",
+    "other-nonfree",
+    "nosell"
+}
+
 class Entry:
     def __init__(self, package):
-        filename = get_entry_filename(package)
+        ctan_package = ctan_packages.get(package, package)
+        filename = get_entry_filename(ctan_package)
         if os.path.isfile(filename):
             tree = ET.parse(filename)
             ele = tree.find("./name")
             if ele == None:
-                self.name = package
+                self.name = ctan_package
             else:
                 self.name = normalize(ET.tostring(ele, encoding="unicode", method="text"))
             ele = tree.find("./caption");
@@ -59,7 +74,7 @@ class Entry:
             else:
                 self.ctan_path = ele.get("path")
         else:
-            self.name = package
+            self.name = ctan_package
             self.caption = None
             self.description = None
             self.copyright_owner = None
@@ -67,3 +82,8 @@ class Entry:
             self.license_type = None
             self.version_number = None
             self.ctan_path = None
+
+    def is_free(self):
+        if self.license_type == None:
+            return True
+        return not self.license_type in non_free_licenses

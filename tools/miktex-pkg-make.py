@@ -18,6 +18,7 @@ def unpack_tds_zip_file(tds_zip_file, dest_dir):
     
 def run_tdsutil(package, source_dir, dest_dir):
     tdsutil = [miktex.packaging.settings.paths.TDSUTIL_EXECUTABLE]
+    tdsutil.append("--verbose")
     tdsutil.append("--source-dir=" + source_dir)
     tdsutil.append("--dest-dir=" + dest_dir)
     tdsutil.append("--recipe=" + os.path.normpath(miktex.packaging.settings.paths.TDSUTIL_DEFAULT_RECIPE))
@@ -53,6 +54,8 @@ if len(sys.argv) != 2:
 
 package = sys.argv[1]
 entry = miktex.packaging.info.texcatalogue.Entry(package)
+if not entry.is_free():
+    sys.exit("package '" + package + "' has a license issue")
 if entry.ctan_path == None:
     sys.exit("package '" + package + "' has no ctan_path")
 source_dir = os.path.normpath(miktex.packaging.settings.paths.MIKTEX_CTAN + entry.ctan_path)
@@ -66,5 +69,6 @@ if os.path.isfile(tds_zip_file):
     unpack_tds_zip_file(tds_zip_file, dest_dir)
 else:
     run_tdsutil(package, source_dir, dest_dir)
+miktex.packaging.util.filesystem.remove_empty_directories(dest_dir)
 archive_source_files(package, dest_dir)
 miktex.packaging.info.inifile.write_ini_file(package, entry, miktex.packaging.info.md5.try_get_md5(package))

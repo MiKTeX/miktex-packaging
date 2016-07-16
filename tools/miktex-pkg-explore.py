@@ -20,12 +20,11 @@ if len(sys.argv) != 2:
     sys.exit("Usage: " + sys.argv[0] + " <package-name>")
 
 package = sys.argv[1]
-package_dir = miktex.packaging.settings.paths.get_package_dir(package)
-if os.path.isdir(package_dir):
-    miktex.packaging.util.filesystem.explore_directory(package_dir)
 entry = miktex.packaging.info.texcatalogue.Entry(package)
 if entry.ctan_path != None:
     ctan_dir = os.path.normpath(miktex.packaging.settings.paths.MIKTEX_CTAN + entry.ctan_path)
     if os.path.isdir(ctan_dir):
         miktex.packaging.util.filesystem.explore_directory(ctan_dir)
-
+package_dir = miktex.packaging.settings.paths.get_package_dir(package)
+if os.path.isdir(package_dir):
+    miktex.packaging.util.filesystem.explore_directory(package_dir)

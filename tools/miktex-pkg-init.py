@@ -3,6 +3,11 @@
 # Licensed to you under the MIT license.  See the LICENSE file in the
 # project root for more information.
 
+"""
+For a given package, update files 'package.ini' and 'Description' in
+the staging directory.
+"""
+
 import miktex.packaging.info.inifile
 import miktex.packaging.info.md5
 import miktex.packaging.info.texcatalogue

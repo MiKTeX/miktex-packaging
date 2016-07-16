@@ -22,3 +22,11 @@ def remove_directory(dir):
     else:
         shutil.rmtree(dir)
 
+def remove_empty_directories(parent_dir):
+    for dirpath, dirnames, filenames in os.walk(parent_dir):
+        for dir in dirnames:
+            subdir = os.path.join(dirpath, dir)
+            try:
+                os.removedirs(subdir)
+            except:
+                pass
