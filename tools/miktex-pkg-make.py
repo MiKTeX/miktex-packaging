@@ -16,10 +16,10 @@ def unpack_tds_zip_file(tds_zip_file, dest_dir):
   os.mkdir(dest_dir)
   subprocess.call([miktex.packaging.settings.paths.UNZIP_EXECUTABLE, "-qq", tds_zip_file, "-d", dest_dir])
     
-def run_tdsutil(package, source_dir, dest_dir):
+def run_tdsutil(package, source, dest_dir):
     tdsutil = [miktex.packaging.settings.paths.TDSUTIL_EXECUTABLE]
     tdsutil.append("--verbose")
-    tdsutil.append("--source-dir=" + source_dir)
+    tdsutil.append("--source=" + source)
     tdsutil.append("--dest-dir=" + dest_dir)
     tdsutil.append("--recipe=" + os.path.normpath(miktex.packaging.settings.paths.TDSUTIL_DEFAULT_RECIPE))
     package_recipe_file = os.path.normpath(os.path.join(miktex.packaging.settings.paths.TDSUTIL_RECIPE_DIR,
@@ -58,9 +58,9 @@ if not entry.is_free():
     sys.exit("package '" + package + "' has a license issue")
 if entry.ctan_path == None:
     sys.exit("package '" + package + "' has no ctan_path")
-source_dir = os.path.normpath(miktex.packaging.settings.paths.MIKTEX_CTAN + entry.ctan_path)
-if not os.path.isdir(source_dir):
-    sys.exit("'" + source_dir + "' is not a directory")
+source = os.path.normpath(miktex.packaging.settings.paths.MIKTEX_CTAN + entry.ctan_path)
+if not (os.path.isfile(source) or os.path.isdir(source)):
+    sys.exit("'" + source + "' is not a file or directory")
 dest_dir = os.path.normpath(miktex.packaging.settings.paths.get_texmf_dir(package))
 if os.path.isdir(dest_dir):
     miktex.packaging.util.filesystem.remove_directory(dest_dir)
@@ -68,7 +68,7 @@ tds_zip_file = os.path.normpath(miktex.packaging.settings.paths.MIKTEX_CTAN + "/
 if os.path.isfile(tds_zip_file):
     unpack_tds_zip_file(tds_zip_file, dest_dir)
 else:
-    run_tdsutil(package, source_dir, dest_dir)
+    run_tdsutil(package, source, dest_dir)
 miktex.packaging.util.filesystem.remove_empty_directories(dest_dir)
 archive_source_files(package, dest_dir)
 miktex.packaging.info.inifile.write_ini_file(package, entry, miktex.packaging.info.md5.try_get_md5(package))
