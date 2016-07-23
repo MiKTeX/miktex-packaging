@@ -25,7 +25,7 @@ def retrieve_file(ctan_rsync_host, file_to_get):
 
 def show_file(file):
     if platform.system() == "Windows":
-        subprocess.call([ "notepad.exe", file ])
+        subprocess.Popen([ "notepad.exe", file ])
     else:
         subprocess.call([ "more", file ])
 
@@ -34,7 +34,7 @@ def compare_to_previous_version(file):
     if os.path.isfile(prev_file):
         diff_file = file + ".diff.txt"
         diff_output = open(diff_file, "wb")
-        subprocess.call([ miktex.packaging.settings.paths.DIFF_EXECUTABLE, "-c2", file, prev_file ],
+        subprocess.call([ miktex.packaging.settings.paths.DIFF_EXECUTABLE, "-c2", prev_file, file ],
                         stdout=diff_output)
         diff_output.close()
         statinfo = os.stat(diff_file)
