@@ -12,6 +12,13 @@ import os
 import subprocess
 import sys
 
+# TODO: read from file
+broken_tds_zip_files = [ "koma-script" ];
+
+special_tds_zip_files = {
+    "ltxbase": "/install/macros/latex/latex-base.tds.zip"
+}
+
 def unpack_tds_zip_file(tds_zip_file, dest_dir):
   os.mkdir(dest_dir)
   subprocess.call([miktex.packaging.settings.paths.UNZIP_EXECUTABLE, "-qq", tds_zip_file, "-d", dest_dir])
@@ -64,8 +71,12 @@ if not (os.path.isfile(source) or os.path.isdir(source)):
 dest_dir = os.path.normpath(miktex.packaging.settings.paths.get_texmf_dir(package))
 if os.path.isdir(dest_dir):
     miktex.packaging.util.filesystem.remove_directory(dest_dir)
-tds_zip_file = os.path.normpath(miktex.packaging.settings.paths.MIKTEX_CTAN + "/install" + entry.ctan_path + ".tds.zip")
-if os.path.isfile(tds_zip_file):
+special_tds_zip_file = special_tds_zip_files.get(package, None)
+if special_tds_zip_file == None:
+    tds_zip_file = os.path.normpath(miktex.packaging.settings.paths.MIKTEX_CTAN + "/install" + entry.ctan_path + ".tds.zip")
+else:
+    tds_zip_file = os.path.normpath(miktex.packaging.settings.paths.MIKTEX_CTAN + special_tds_zip_file)
+if os.path.isfile(tds_zip_file) and not package in broken_tds_zip_files:
     unpack_tds_zip_file(tds_zip_file, dest_dir)
 else:
     run_tdsutil(package, source, dest_dir)

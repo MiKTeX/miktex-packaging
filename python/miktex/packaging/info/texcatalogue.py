@@ -21,7 +21,8 @@ def normalize(s):
 ctan_packages = {
     "cmcyralt": "cmcyralt-ltx",
     "finbib": "finplain",
-    "tools": "latex-tools"
+    "tools": "latex-tools",
+    "ltxbase": "latex-base"
 }
 
 non_free_licenses = {
