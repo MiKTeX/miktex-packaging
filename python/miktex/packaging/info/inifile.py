@@ -25,6 +25,7 @@ class PackageInfo:
         self.ctan_path = None
         self.md5 = None
         self.description = None
+        self.targetsystem = None
         filename = get_ini_filename(package);
         if os.path.isfile(filename):
             f = codecs.open(filename, "r", "utf-8")
@@ -48,6 +49,8 @@ class PackageInfo:
                     self.ctan_path = pair[1]
                 elif pair[0] == "md5":
                     self.md5 = pair[1]
+                elif pair[0] == "targetsystem":
+                    self.targetsystem = pair[1]
             f.close()
         filename = get_description_filename(package)
         if os.path.isfile(filename):
@@ -73,6 +76,8 @@ class PackageInfo:
             f.write("ctan_path=" + self.ctan_path + "\n")
         if self.md5 != None:
             f.write("md5=" + self.md5 + "\n")
+        if self.targetsystem != None:
+            f.write("targetsystem=" + self.targetsystem + "\n")
         f.close()
         if self.description != None:
             f = codecs.open(get_description_filename(self.package), "w", "utf-8")
