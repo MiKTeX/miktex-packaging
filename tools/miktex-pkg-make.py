@@ -13,7 +13,10 @@ import subprocess
 import sys
 
 # TODO: read from file
-broken_tds_zip_files = [ "koma-script" ];
+broken_tds_zip_files = [
+  "koma-script",
+  "cstypo"
+];
 
 special_tds_zip_files = {
     "ltxbase": "/install/macros/latex/latex-base.tds.zip"

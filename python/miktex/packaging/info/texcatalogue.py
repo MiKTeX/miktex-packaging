@@ -21,6 +21,7 @@ def normalize(s):
 ctan_packages = {
     "cmcyralt": "cmcyralt-ltx",
     "finbib": "finplain",
+    "pstricks": "pstricks-base",
     "tools": "latex-tools",
     "ltxbase": "latex-base"
 }
