@@ -48,7 +48,6 @@ def archive_source_files(package, dest_dir):
         to_be_removed = os.path.join(source_file_dir, package + "-src" + suffix)
         if os.path.isfile(to_be_removed):
             os.remove(to_be_removed)
-    archife_file = os.path.join(source_file_dir, )
     subprocess.call(miktex.packaging.settings.paths.TAR_EXECUTABLE + " -cJf " + package + "-src.tar.xz *",
                     cwd=source_file_dir,
                     shell=True)
