@@ -23,7 +23,8 @@ special_tds_zip_files = {
 }
 
 def unpack_tds_zip_file(tds_zip_file, dest_dir):
-  os.mkdir(dest_dir)
+  print("unpacking " + tds_zip_file + " to " + dest_dir)
+  os.makedirs(dest_dir)
   subprocess.call([miktex.packaging.settings.paths.UNZIP_EXECUTABLE, "-qq", tds_zip_file, "-d", dest_dir])
     
 def run_tdsutil(package, source, dest_dir):
