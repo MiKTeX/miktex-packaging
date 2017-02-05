@@ -14,7 +14,7 @@ import sys
 
 # TODO: read from file
 broken_tds_zip_files = [
-  "koma-script",
+#  "koma-script",
   "cstypo"
 ];
 
