@@ -20,7 +20,8 @@ broken_tds_zip_files = [
 
 special_tds_zip_files = {
     "babel": "/install/macros/latex/required/babel-base.tds.zip",
-    "ltxbase": "/install/macros/latex/latex-base.tds.zip"
+    "ltxbase": "/install/macros/latex/latex-base.tds.zip",
+    "tools": "/install/macros/latex/required/latex-tools.tds.zip"
 }
 
 def unpack_tds_zip_file(tds_zip_file, dest_dir):
