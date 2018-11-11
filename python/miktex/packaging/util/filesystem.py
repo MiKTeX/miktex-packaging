@@ -10,22 +10,25 @@ import platform
 import shutil
 import subprocess
 
+
 def explore_directory(path):
     """Show a directory in Windows Explorer."""
     if platform.system() == "Windows":
         subprocess.call(["explorer", "/e,", "/root,", path])
 
-def remove_directory(dir):
+
+def remove_directory(path):
     """Remove a directory.  We need this because the Windows version of  shutil.rmtree() seems to be broken."""
     if platform.system() == "Windows":
-        subprocess.call("rmdir /S /Q " + dir, shell=True)
+        subprocess.call("rmdir /S /Q " + path, shell=True)
     else:
-        shutil.rmtree(dir)
+        shutil.rmtree(path)
+
 
 def remove_empty_directories(parent_dir):
-    for dirpath, dirnames, filenames in os.walk(parent_dir):
-        for dir in dirnames:
-            subdir = os.path.join(dirpath, dir)
+    for dir_path, dir_names, file_names in os.walk(parent_dir):
+        for d in dir_names:
+            subdir = os.path.join(dir_path, d)
             try:
                 os.removedirs(subdir)
             except:
