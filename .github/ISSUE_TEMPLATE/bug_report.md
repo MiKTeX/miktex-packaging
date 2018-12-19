@@ -8,8 +8,8 @@ assignees: ''
 ---
 
 **IMPORTANT**
-1. Please read the following text.
-2. Then delete the text and start writing the bug report.
+1. Please read the introduction below.
+2. Then delete all the text (Ctrl-A Ctrl-X)  and start writing the bug report.
 
 **Is this the right issue tracker?**
 
