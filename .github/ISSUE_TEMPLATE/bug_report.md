@@ -1,8 +1,15 @@
 ---
 name: Bug report
 about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
 
 ---
+
+**IMPORTANT**
+1. Please read the following text.
+2. Then delete the text and start writing the bug report.
 
 **Is this the right issue tracker?**
 
