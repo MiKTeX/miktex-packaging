@@ -1,14 +1,18 @@
 # Licensed to you under the MIT license.  See the LICENSE file in the
 # project root for more information.
 
-import miktex.packaging.settings.paths
 import os
 import re
-import sys
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ElementTree
+
+import miktex.packaging.settings.paths
+
 
 def get_entry_filename(ctan_package):
-    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_TEX_CATALOGUE, ctan_package[0], ctan_package + ".xml"))
+    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_TEX_CATALOGUE,
+                                         ctan_package[0],
+                                         ctan_package + ".xml"))
+
 
 def normalize(s):
     s = re.sub("^\s+", "", s)
@@ -16,7 +20,8 @@ def normalize(s):
     s = re.sub("\s\s+", " ", s)
     return s
 
-# Maps MiKTeX package names (key) to CTAN package names (value).
+
+# Maps MiKTeX package identifiers (key) to CTAN package identifiers (value).
 # TODO: read from file
 ctan_packages = {
     "cmcyralt": "cmcyralt-ltx",
@@ -33,51 +38,52 @@ non_free_licenses = {
     "nosell"
 }
 
+
 class Entry:
-    def __init__(self, package):
-        ctan_package = ctan_packages.get(package, package)
-        filename = get_entry_filename(ctan_package)
+    def __init__(self, package_id):
+        ctan_package_id = ctan_packages.get(package_id, package_id)
+        filename = get_entry_filename(ctan_package_id)
         if os.path.isfile(filename):
-            tree = ET.parse(filename)
+            tree = ElementTree.parse(filename)
             ele = tree.find("./name")
-            if ele == None:
-                self.name = ctan_package
+            if ele is None:
+                self.name = ctan_package_id
             else:
-                self.name = normalize(ET.tostring(ele, encoding="unicode", method="text"))
-            ele = tree.find("./caption");
-            if ele == None:
+                self.name = normalize(ElementTree.tostring(ele, encoding="unicode", method="text"))
+            ele = tree.find("./caption")
+            if ele is None:
                 self.caption = None
             else:
-                self.caption = normalize(ET.tostring(ele, encoding="unicode", method="text"))
+                self.caption = normalize(ElementTree.tostring(ele, encoding="unicode", method="text"))
             ele = tree.find("./description")
-            if ele == None:
+            if ele is None:
                 self.description = None
             else:
-                self.description = normalize(ET.tostring(ele, encoding="unicode", method="text"))
+                self.description = normalize(ElementTree.tostring(ele, encoding="unicode", method="text"))
             ele = tree.find("./copyright")
-            if ele == None:
+            if ele is None:
                 self.copyright_owner = None
                 self.copyright_year = None
             else:
                 self.copyright_owner = ele.get("owner")
                 self.copyright_year = ele.get("year")
             ele = tree.find("./license")
-            if ele == None:
+            if ele is None:
                 self.license_type = None
             else:
                 self.license_type = ele.get("type")
             ele = tree.find("./version")
-            if ele == None:
+            if ele is None:
                 self.version_number = None
             else:
                 self.version_number = ele.get("number")
             ele = tree.find("./ctan")
-            if ele == None:
+            if ele is None:
                 self.ctan_path = None
             else:
                 self.ctan_path = ele.get("path")
         else:
-            self.name = ctan_package
+            self.name = ctan_package_id
             self.caption = None
             self.description = None
             self.copyright_owner = None
@@ -87,6 +93,6 @@ class Entry:
             self.ctan_path = None
 
     def is_free(self):
-        if self.license_type == None:
+        if self.license_type is None:
             return True
-        return not self.license_type in non_free_licenses
+        return self.license_type not in non_free_licenses

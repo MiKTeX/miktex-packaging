@@ -8,10 +8,11 @@ For a given package, update files 'package.ini' and 'Description' in
 the staging directory.
 """
 
+import sys
+
 import miktex.packaging.info.inifile
 import miktex.packaging.info.md5
 import miktex.packaging.info.texcatalogue
-import sys
 
 if len(sys.argv) != 2:
     sys.exit("Usage: " + sys.argv[0] + " <package-name>")
