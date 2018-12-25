@@ -1,6 +1,6 @@
 # Contributing to MiKTeX
 
-## Report a package bug
+## Reporting a package bug
 
 Please note: this issue tracker if for problems regarding the contents of the MiKTeX package repository. So it is okay to report issues like the following:
 
