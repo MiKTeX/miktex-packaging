@@ -1,0 +1,1 @@
+- [x] I have read the [MiKTeX Contributing Guidelines](https://github.com/MiKTeX/miktex-packaging/blob/master/CONTRIBUTING.md)
