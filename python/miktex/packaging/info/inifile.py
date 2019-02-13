@@ -9,11 +9,11 @@ import miktex.packaging.settings.paths
 
 
 def get_ini_filename(package):
-    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_PACKAGE_ROOT, package, "package.ini"))
+    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_PACKAGE_STAGING_ROOT, package, "package.ini"))
 
 
 def get_description_filename(package):
-    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_PACKAGE_ROOT, package, "Description"))
+    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_PACKAGE_STAGING_ROOT, package, "Description"))
 
 
 class PackageInfo:
@@ -91,7 +91,7 @@ class PackageInfo:
 
 
 def write_ini_file(package, entry, md5=None):
-    package_dir = os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_PACKAGE_ROOT, package))
+    package_dir = os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_PACKAGE_STAGING_ROOT, package))
     if not os.path.isdir(package_dir):
         os.mkdir(package_dir)
     f = codecs.open(get_ini_filename(package), "w", "utf-8")

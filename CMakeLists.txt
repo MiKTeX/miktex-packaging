@@ -30,17 +30,17 @@ foreach(p ${required_programs})
   endif()
 endforeach()
 
-if(DEFINED ENV{MIKTEX_CTAN})
-  set(miktex_ctan_ $ENV{MIKTEX_CTAN})
+if(DEFINED ENV{MIKTEX_CTAN_MIRROR})
+  set(miktex_ctan_mirror_ $ENV{MIKTEX_CTAN_MIRROR})
 elseif(DEFINED ENV{CTAN})
-  set(miktex_ctan_ $ENV{CTAN})
+  set(miktex_ctan_mirror_ $ENV{CTAN})
 else()
-  set(miktex_ctan_ "/path/to/ctan_mirror")
+  set(miktex_ctan_mirror_ "/path/to/ctan_mirror")
 endif()
 
 set(
-  MIKTEX_CTAN
-  ${miktex_ctan_}
+  MIKTEX_CTAN_MIRROR
+  ${miktex_ctan_mirror_}
   CACHE PATH
   "The path to the root directory of a local CTAN mirror."
 )
@@ -60,15 +60,15 @@ set(
   "The path to the TeX catalogue entries."
 )
 
-if(DEFINED ENV{MIKTEX_PACKAGE_ROOT})
-  set(miktex_package_root_ $ENV{MIKTEX_PACKAGE_ROOT})
+if(DEFINED ENV{MIKTEX_PACKAGE_STAGING_ROOT})
+  set(miktex_package_staging_root_ $ENV{MIKTEX_PACKAGE_STAGING_ROOT})
 else()
-  set(miktex_package_root_ "/path/to/miktex_package_root")
+  set(miktex_package_staging_root_ "/path/to/miktex_package_staging_root")
 endif()
 
 set(
-  MIKTEX_PACKAGE_ROOT
-  ${miktex_package_root_}
+  MIKTEX_PACKAGE_STAGING_ROOT
+  ${miktex_package_staging_root_}
   CACHE PATH
   "The path to the root directory of the MiKTeX package staging area."
 )

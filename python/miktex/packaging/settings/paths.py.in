@@ -5,8 +5,8 @@ import os
 
 DIFF_EXECUTABLE = "@DIFF_EXECUTABLE@"
 MD5WALK_EXECUTABLE = "@MD5WALK_EXECUTABLE@"
-MIKTEX_CTAN = "@MIKTEX_CTAN@"
-MIKTEX_PACKAGE_ROOT = "@MIKTEX_PACKAGE_ROOT@"
+MIKTEX_CTAN_MIRROR = "@MIKTEX_CTAN_MIRROR@"
+MIKTEX_PACKAGE_STAGING_ROOT = "@MIKTEX_PACKAGE_STAGING_ROOT@"
 MIKTEX_TEX_CATALOGUE = "@MIKTEX_TEX_CATALOGUE@"
 RSYNC_EXECUTABLE = "@RSYNC_EXECUTABLE@"
 TAR_EXECUTABLE = "@TAR_EXECUTABLE@"
@@ -18,12 +18,12 @@ UNZIP_EXECUTABLE = "@UNZIP_EXECUTABLE@"
 
 
 def get_package_dir(package_id):
-    return os.path.normpath(os.path.join(MIKTEX_PACKAGE_ROOT, package_id))
+    return os.path.normpath(os.path.join(MIKTEX_PACKAGE_STAGING_ROOT, package_id))
 
 
 def get_texmf_parent_dir(package_id):
-    return os.path.normpath(os.path.join(MIKTEX_PACKAGE_ROOT, package_id, "Files"))
+    return os.path.normpath(os.path.join(MIKTEX_PACKAGE_STAGING_ROOT, package_id, "Files"))
 
 
 def get_texmf_dir(package_id):
-    return os.path.normpath(os.path.join(MIKTEX_PACKAGE_ROOT, package_id, "Files", "texmf"))
+    return os.path.normpath(os.path.join(MIKTEX_PACKAGE_STAGING_ROOT, package_id, "Files", "texmf"))
