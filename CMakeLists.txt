@@ -79,6 +79,12 @@ configure_file(
 )
 
 configure_file(
+  ${CMAKE_SOURCE_DIR}/setvars.sh.in
+  ${CMAKE_BINARY_DIR}/setvars.sh
+  @ONLY
+)
+
+configure_file(
   ${CMAKE_SOURCE_DIR}/python/miktex/packaging/settings/paths.py.in
   ${CMAKE_BINARY_DIR}/python2/miktex/packaging/settings/paths.py
 )
