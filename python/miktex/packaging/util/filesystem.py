@@ -11,12 +11,13 @@ import shutil
 import subprocess
 
 
-def explore_directory(path):
-    """Show a directory in Windows Explorer."""
+def explore_directories(directories):
+    """Show directories in Windows Explorer or Emacs."""
     if platform.system() == "Windows":
-        subprocess.call(["explorer", "/e,", "/root,", path])
+        for d in directories:
+            subprocess.call(["explorer", "/e,", "/root,", d])
     else:
-        subprocess.call(["emacs", path])
+        subprocess.call(["emacs"] + directories)
 
 
 def remove_directory(path):

@@ -17,7 +17,7 @@ import sys
 import miktex.packaging.settings.paths
 
 
-def retrieve_file(ctan_rsync_host, file_to_get):
+def _retrieve_file(ctan_rsync_host, file_to_get):
     subprocess.call([miktex.packaging.settings.paths.RSYNC_EXECUTABLE,
                      "-aqz",
                      "--no-perms",
@@ -26,15 +26,17 @@ def retrieve_file(ctan_rsync_host, file_to_get):
                      "."])
 
 
-def show_file(file):
+def _show_files(files):
     if platform.system() == "Windows":
-        subprocess.Popen(["notepad.exe", file])
+        for f in files:
+            subprocess.Popen(["notepad.exe", f])
     else:
-        subprocess.call(["more", file])
+        subprocess.call(["emacs"] + files)
 
 
-def compare_to_previous_version(file):
+def _compare_to_previous_version(file):
     prev_file = file + ".prev"
+    result = None
     if os.path.isfile(prev_file):
         diff_file = file + ".diff.txt"
         diff_output = open(diff_file, "wb")
@@ -45,15 +47,23 @@ def compare_to_previous_version(file):
         if stat_info.st_size > 0:
             if platform.system() == "Windows":
                 subprocess.call([miktex.packaging.settings.paths.UNIX2DOS_EXECUTABLE, "-q", diff_file])
-            show_file(diff_file)
+            result = diff_file
     shutil.copyfile(file, prev_file)
+    return result
 
 
 if len(sys.argv) != 1:
     sys.exit("Usage: " + sys.argv[0])
 
-rsync_host = "ftp.dante.de"
-retrieve_file(rsync_host, "FILES.byname")
-compare_to_previous_version("FILES.byname")
-retrieve_file(rsync_host, "CTAN.sites")
-compare_to_previous_version("CTAN.sites")
+_rsync_host = "ftp.dante.de"
+_retrieve_file(_rsync_host, "FILES.byname")
+_to_be_shown = []
+_file = _compare_to_previous_version("FILES.byname")
+if _file:
+    _to_be_shown.append(_file)
+_retrieve_file(_rsync_host, "CTAN.sites")
+_file = _compare_to_previous_version("CTAN.sites")
+if _file:
+    _to_be_shown.append(_file)
+if _to_be_shown:
+    _show_files(_to_be_shown)
