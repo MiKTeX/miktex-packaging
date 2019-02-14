@@ -98,6 +98,7 @@ configure_file(
   ${CMAKE_SOURCE_DIR}/python/miktex/packaging/__init__.py.in
   ${CMAKE_BINARY_DIR}/python2/miktex/packaging/__init__.py
 )
+
 configure_file(
   ${CMAKE_SOURCE_DIR}/python/miktex/__init__.py.in
   ${CMAKE_BINARY_DIR}/python2/miktex/__init__.py

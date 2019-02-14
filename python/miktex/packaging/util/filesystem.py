@@ -15,6 +15,8 @@ def explore_directory(path):
     """Show a directory in Windows Explorer."""
     if platform.system() == "Windows":
         subprocess.call(["explorer", "/e,", "/root,", path])
+    else:
+        subprocess.call(["emacs", path])
 
 
 def remove_directory(path):
