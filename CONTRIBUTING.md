@@ -9,4 +9,6 @@ Please note: this issue tracker if for problems regarding the contents of the Mi
 
 This issue tracker **is not** for software bugs (defects in MiKTeX programs).
 
+Please do not report functional package problems (e.g., `! Undefined control sequence.`).
+
 Thanks!
