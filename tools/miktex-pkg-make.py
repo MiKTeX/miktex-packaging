@@ -21,6 +21,9 @@ broken_tds_zip_files = [
 special_tds_zip_files = {
     "babel": "/install/macros/latex/required/babel-base.tds.zip",
     "ltxbase": "/install/macros/latex/latex-base.tds.zip",
+    "latex-base-dev": "/install/macros/latex-dev/latex-base-dev.tds.zip",
+    "latex-doc-dev": "/install/macros/latex-dev/latex-doc-dev.tds.zip",
+    "latex-graphics-dev": "/install/macros/latex-dev/required/latex-graphics-dev.tds.zip",
     "pgf": "/install/graphics/pgf/base/pgf.tds.zip",
     "tools": "/install/macros/latex/required/latex-tools.tds.zip"
 }
