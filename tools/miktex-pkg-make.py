@@ -22,8 +22,9 @@ special_tds_zip_files = {
     "babel": "/install/macros/latex/required/babel-base.tds.zip",
     "ltxbase": "/install/macros/latex/latex-base.tds.zip",
     "latex-base-dev": "/install/macros/latex-dev/latex-base-dev.tds.zip",
-    "latex-doc-dev": "/install/macros/latex-dev/latex-doc-dev.tds.zip",
     "latex-graphics-dev": "/install/macros/latex-dev/required/latex-graphics-dev.tds.zip",
+    "latex-amsmath-dev": "/install/macros/latex-dev/required/latex-amsmath-dev.tds.zip",
+    "latex-tools-dev": "/install/macros/latex-dev/required/latex-tools-dev.tds.zip",
     "pgf": "/install/graphics/pgf/base/pgf.tds.zip",
     "tools": "/install/macros/latex/required/latex-tools.tds.zip"
 }
@@ -32,7 +33,7 @@ special_tds_zip_files = {
 def unpack_tds_zip_file(tds_zip_file, dst_dir):
     print("unpacking " + tds_zip_file + " to " + dst_dir)
     os.makedirs(dst_dir)
-    subprocess.call([miktex.packaging.settings.paths.UNZIP_EXECUTABLE, "-qq", tds_zip_file, "-d", dst_dir])
+    subprocess.call([miktex.packaging.settings.paths.UNZIP_EXECUTABLE, "-o", "-qq", tds_zip_file, "-d", dst_dir])
 
 
 def run_tdsutil(package, source, dst_dir):
