@@ -15,8 +15,7 @@ import miktex.packaging.util.filesystem
 
 # TODO: read from file
 broken_tds_zip_files = [
-    "cstypo",
-    "xepersian"
+    "cstypo"
 ]
 
 special_tds_zip_files = {
