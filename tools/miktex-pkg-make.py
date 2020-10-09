@@ -22,6 +22,7 @@ special_tds_zip_files = {
     "babel": "/install/macros/latex/required/babel-base.tds.zip",
     "ltxbase": "/install/macros/latex/latex-base.tds.zip",
     "latex-base-dev": "/install/macros/latex-dev/latex-base-dev.tds.zip",
+    "latex-firstaid": "/install/macros/latex/required/latex-firstaid.tds.zip",
     "latex-graphics-dev": "/install/macros/latex-dev/required/latex-graphics-dev.tds.zip",
     "latex-amsmath-dev": "/install/macros/latex-dev/required/latex-amsmath-dev.tds.zip",
     "latex-tools-dev": "/install/macros/latex-dev/required/latex-tools-dev.tds.zip",
