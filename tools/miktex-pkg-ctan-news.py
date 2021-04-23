@@ -55,7 +55,8 @@ def _compare_to_previous_version(file):
 if len(sys.argv) != 1:
     sys.exit("Usage: " + sys.argv[0])
 
-_rsync_host = "ftp.dante.de"
+#_rsync_host = "ftp.dante.de"
+_rsync_host = "rsync.dante.ctan.org"
 _retrieve_file(_rsync_host, "FILES.byname")
 _to_be_shown = []
 _file = _compare_to_previous_version("FILES.byname")
