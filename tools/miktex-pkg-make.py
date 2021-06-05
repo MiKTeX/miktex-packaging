@@ -14,6 +14,8 @@ from miktex.packaging.info import texcatalogue
 from miktex.packaging.settings import paths
 from miktex.packaging.util import filesystem
 
+COMPANIAN_PACKAGE_ID_TEMPLATE = "{}__{}"
+
 # TODO: read from file
 broken_tds_zip_files = [
     "cstypo"
@@ -63,7 +65,7 @@ def make_companion_package(main_package_id: str, main_entry: texcatalogue.Entry,
     source_dir = os.path.normpath(os.path.join(main_dir, sub_dir))
     if not os.path.isdir(source_dir):
         return
-    package_id = "{}-{}".format(main_package_id, sub_dir)
+    package_id = COMPANIAN_PACKAGE_ID_TEMPLATE.format(main_package_id, sub_dir)
     package_dir = os.path.normpath(paths.get_package_dir(package_id))
     if os.path.isdir(package_dir):
         filesystem.remove_directory(package_dir)
@@ -71,7 +73,7 @@ def make_companion_package(main_package_id: str, main_entry: texcatalogue.Entry,
     filesystem.move_directory(source_dir, dest_dir)
     entry = copy.copy(main_entry)
     entry.name = None
-    inifile.write_ini_file(package_id, entry, md5.try_get_md5_hash(package_id))    
+    inifile.write_ini_file(package_id, entry, md5.try_get_md5_hash(package_id))
 
 
 def main():
@@ -101,8 +103,10 @@ def main():
     else:
         run_tdsutil(package_id, source, dst_dir)
     filesystem.remove_empty_directories(dst_dir)
-    make_companion_package(main_package_id=package_id, main_entry=entry, sub_dir="doc")
-    make_companion_package(main_package_id=package_id, main_entry=entry, sub_dir="source")
+    make_companion_package(main_package_id=package_id,
+                           main_entry=entry, sub_dir="doc")
+    make_companion_package(main_package_id=package_id,
+                           main_entry=entry, sub_dir="source")
     inifile.write_ini_file(package_id, entry, md5.try_get_md5_hash(package_id))
 
 
