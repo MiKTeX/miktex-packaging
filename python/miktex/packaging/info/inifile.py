@@ -1,26 +1,26 @@
 # Licensed to you under the MIT license.  See the LICENSE file in the
 # project root for more information.
 
-import codecs
+import io
 import os
 
-import miktex.packaging.info.texcatalogue
-import miktex.packaging.settings.paths
+from miktex.packaging.info import texcatalogue
+from miktex.packaging.settings import paths
 
 
-def get_ini_filename(package):
-    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_PACKAGE_STAGING_ROOT, package, "package.ini"))
+def get_ini_filename(package: str) -> str:
+    return os.path.normpath(os.path.join(paths.MIKTEX_PACKAGE_STAGING_ROOT, package, "package.ini"))
 
 
-def get_description_filename(package):
-    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_PACKAGE_STAGING_ROOT, package, "Description"))
+def get_description_filename(package: str) -> str:
+    return os.path.normpath(os.path.join(paths.MIKTEX_PACKAGE_STAGING_ROOT, package, "Description"))
 
 
 class PackageInfo:
-    def __init__(self, package):
-        self.package = package
-        self.externalname = package
-        self.name = package
+    def __init__(self, package_id: str):
+        self.package = package_id
+        self.externalname = package_id
+        self.name = package_id
         self.title = None
         self.copyright_owner = None
         self.copyright_year = None
@@ -30,92 +30,99 @@ class PackageInfo:
         self.md5 = None
         self.description = None
         self.targetsystem = None
-        filename = get_ini_filename(package)
+        filename = get_ini_filename(package_id)
         if os.path.isfile(filename):
-            f = codecs.open(filename, "r", "utf-8")
-            for line in f.readlines():
-                pair = line.strip().split("=")
-                if pair[0] == "externalname":
-                    self.externalname = pair[1]
-                elif pair[0] == "name":
-                    self.name = pair[1]
-                elif pair[0] == "title":
-                    self.title = pair[1]
-                elif pair[0] == "copyright_owner":
-                    self.copyright_owner = pair[1]
-                elif pair[0] == "copyright_year":
-                    self.copyright_year = pair[1]
-                elif pair[0] == "version":
-                    self.version = pair[1]
-                elif pair[0] == "license_type":
-                    self.license_type = pair[1]
-                elif pair[0] == "ctan_path":
-                    self.ctan_path = pair[1]
-                elif pair[0] == "md5":
-                    self.md5 = pair[1]
-                elif pair[0] == "targetsystem":
-                    self.targetsystem = pair[1]
-            f.close()
-        filename = get_description_filename(package)
+            with io.open(filename, encoding="utf-8") as f:
+                for line in f.readlines():
+                    pair = line.strip().split("=")
+                    if pair[0] == "externalname":
+                        self.externalname = pair[1]
+                    elif pair[0] == "name":
+                        self.name = pair[1]
+                    elif pair[0] == "title":
+                        self.title = pair[1]
+                    elif pair[0] == "copyright_owner":
+                        self.copyright_owner = pair[1]
+                    elif pair[0] == "copyright_year":
+                        self.copyright_year = pair[1]
+                    elif pair[0] == "version":
+                        self.version = pair[1]
+                    elif pair[0] == "license_type":
+                        self.license_type = pair[1]
+                    elif pair[0] == "ctan_path":
+                        self.ctan_path = pair[1]
+                    elif pair[0] == "md5":
+                        self.md5 = pair[1]
+                    elif pair[0] == "targetsystem":
+                        self.targetsystem = pair[1]
+        filename = get_description_filename(package_id)
         if os.path.isfile(filename):
-            f = codecs.open(filename, "r", "utf-8")
-            self.description = f.read()
+            with io.open(filename, encoding="utf-8") as f:
+                self.description = f.read()
 
     def write(self):
-        f = codecs.open(get_ini_filename(self.package), "w", "utf-8")
-        if self.externalname is not None:
-            f.write("externalname=" + self.externalname + "\n")
-        if self.name is not None:
-            f.write("name=" + self.name + "\n")
-        if self.title is not None:
-            f.write("title=" + self.title + "\n")
-        if self.copyright_owner is not None:
-            f.write("copyright_owner=" + self.copyright_owner + "\n")
-        if self.copyright_year is not None:
-            f.write("copyright_year=" + self.copyright_year + "\n")
-        if self.version is not None:
-            f.write("version=" + self.version + "\n")
-        if self.license_type is not None:
-            f.write("license_type=" + self.license_type + "\n")
+        lines = []
+        if self.externalname:
+            lines.append("externalname={}\n".format(self.externalname))
+        if self.name:
+            lines.append("name={}\n".format(self.name))
+        if self.title:
+            lines.append("title={}\n".format(self.title))
+        if self.copyright_owner:
+            lines.append("copyright_owner={}\n".format(self.copyright_owner))
+        if self.copyright_year:
+            lines.append("copyright_year={}\n".format(self.copyright_year))
+        if self.version:
+            lines.append("version={}\n".format(self.version))
+        if self.license_type:
+            lines.append("license_type=\n{}".format(self.license_type))
         if self.ctan_path:
-            f.write("ctan_path=" + self.ctan_path + "\n")
-        if self.md5 is not None:
-            f.write("md5=" + self.md5 + "\n")
-        if self.targetsystem is not None:
-            f.write("targetsystem=" + self.targetsystem + "\n")
-        f.close()
-        if self.description is not None:
-            f = codecs.open(get_description_filename(self.package), "w", "utf-8")
-            f.write(self.description)
-            f.close()
+            lines.append("ctan_path={}\n".format(self.ctan_path))
+        if self.md5:
+            lines.append("md5={}\n".format(self.md5))
+        if self.targetsystem:
+            lines.append("targetsystem={}\n".format(self.targetsystem))
+        with io.open(get_ini_filename(self.package), mode="w", encoding="utf-8") as f:
+            f.writelines(lines)
+        if self.description:
+            with io.open(get_description_filename(self.package), mode="w", encoding="utf-8") as f:
+                f.write(self.description)
 
 
-def write_ini_file(package, entry, md5=None):
-    package_dir = os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_PACKAGE_STAGING_ROOT, package))
+def write_ini_file(package_id: str, entry: texcatalogue.Entry, md5_hash: str = None):
+    """Write a package information file.
+
+    Args:
+        package_id (str): package identifier
+        entry (miktex.packaging.info.texcatalogue.Entry): catalogue entry
+        md5 (str, optional): MD5 digest. Defaults to None.
+    """
+    lines = []
+    lines.append("externalname={}\n".format(package_id))
+    if entry.name:
+        lines.append("name={}\n".format(entry.name))
+    else:
+        lines.append("name={}\n".format(package_id))
+    if entry.caption:
+        lines.append("title={}\n".format(entry.caption))
+    if entry.copyright_owner:
+        lines.append("copyright_owner={}\n".format(entry.copyright_owner))
+    if entry.copyright_year:
+        lines.append("copyright_year={}\n".format(entry.copyright_year))
+    if entry.version_number:
+        lines.append("version={}\n".format(entry.version_number))
+    if entry.license_type:
+        lines.append("license_type={}\n".format(entry.license_type))
+    if entry.ctan_path:
+        lines.append("ctan_path={}\n".format(entry.ctan_path))
+    if md5_hash:
+        lines.append("md5={}\n".format(md5_hash))
+    package_dir = os.path.normpath(os.path.join(
+        paths.MIKTEX_PACKAGE_STAGING_ROOT, package_id))
     if not os.path.isdir(package_dir):
         os.mkdir(package_dir)
-    f = codecs.open(get_ini_filename(package), "w", "utf-8")
-    f.write("externalname=" + package + "\n")
-    if entry.name is None:
-        f.write("name=" + package + "\n")
-    else:
-        f.write("name=" + entry.name + "\n")
-    if entry.caption is not None:
-        f.write("title=" + entry.caption + "\n")
-    if entry.copyright_owner is not None:
-        f.write("copyright_owner=" + entry.copyright_owner + "\n")
-    if entry.copyright_year is not None:
-        f.write("copyright_year=" + entry.copyright_year + "\n")
-    if entry.version_number is not None:
-        f.write("version=" + entry.version_number + "\n")
-    if entry.license_type is not None:
-        f.write("license_type=" + entry.license_type + "\n")
-    if entry.ctan_path is not None:
-        f.write("ctan_path=" + entry.ctan_path + "\n")
-    if md5 is not None:
-        f.write("md5=" + md5 + "\n")
-    f.close()
-    if entry.description is not None:
-        f = codecs.open(get_description_filename(package), "w", "utf-8")
-        f.write(entry.description)
-        f.close()
+    with io.open(get_ini_filename(package_id), mode="w", encoding="utf-8") as f:
+        f.writelines(lines)
+    if entry.description:
+        with io.open(get_description_filename(package_id), mode="w", encoding="utf-8") as f:
+            f.write(entry.description)

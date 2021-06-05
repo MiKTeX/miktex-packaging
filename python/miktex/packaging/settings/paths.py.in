@@ -17,13 +17,13 @@ UNIX2DOS_EXECUTABLE = "@UNIX2DOS_EXECUTABLE@"
 UNZIP_EXECUTABLE = "@UNZIP_EXECUTABLE@"
 
 
-def get_package_dir(package_id):
+def get_package_dir(package_id: str) -> str:
     return os.path.normpath(os.path.join(MIKTEX_PACKAGE_STAGING_ROOT, package_id))
 
 
-def get_texmf_parent_dir(package_id):
+def get_texmf_parent_dir(package_id: str) -> str:
     return os.path.normpath(os.path.join(MIKTEX_PACKAGE_STAGING_ROOT, package_id, "Files"))
 
 
-def get_texmf_dir(package_id):
+def get_texmf_dir(package_id: str) -> str:
     return os.path.normpath(os.path.join(MIKTEX_PACKAGE_STAGING_ROOT, package_id, "Files", "texmf"))

@@ -5,37 +5,36 @@ import os
 import re
 import xml.etree.ElementTree as ElementTree
 
-import miktex.packaging.settings.paths
+from miktex.packaging.settings import paths
 
 
-def get_entry_filename(ctan_package):
-    return os.path.normpath(os.path.join(miktex.packaging.settings.paths.MIKTEX_TEX_CATALOGUE,
-                                         ctan_package[0],
-                                         ctan_package + ".xml"))
+def get_entry_filename(ctan_package: str) -> str:
+    return os.path.normpath(os.path.join(paths.MIKTEX_TEX_CATALOGUE, ctan_package[0], "{}.xml".format(ctan_package)))
 
 
-def normalize(s):
-    s = re.sub("^\s+", "", s)
-    s = re.sub("\s+$", "", s)
-    s = re.sub("\s\s+", " ", s)
+def normalize(s: str) -> str:
+    s = re.sub(r"^\s+", "", s)
+    s = re.sub(r"\s+$", "", s)
+    s = re.sub(r"\s\s+", " ", s)
     return s
 
 
 # Maps MiKTeX package identifiers (key) to CTAN package identifiers (value).
 # TODO: read from file
 ctan_packages = {
+    "12many": "one2many",
     "cmcyralt": "cmcyralt-ltx",
+    "cyrillic": "latex-cyrillic",
     "finbib": "finplain",
+    "ltxbase": "latex-base",
     "pstricks": "pstricks-base",
     "tools": "latex-tools",
-    "ltxbase": "latex-base",
-    "cyrillic": "latex-cyrillic",
 }
 
 non_free_licenses = {
     "nocommercial",
+    "nosell",
     "other-nonfree",
-    "nosell"
 }
 
 
@@ -49,17 +48,20 @@ class Entry:
             if ele is None:
                 self.name = ctan_package_id
             else:
-                self.name = normalize(ElementTree.tostring(ele, encoding="unicode", method="text"))
+                self.name = normalize(ElementTree.tostring(
+                    ele, encoding="unicode", method="text"))
             ele = tree.find("./caption")
             if ele is None:
                 self.caption = None
             else:
-                self.caption = normalize(ElementTree.tostring(ele, encoding="unicode", method="text"))
+                self.caption = normalize(ElementTree.tostring(
+                    ele, encoding="unicode", method="text"))
             ele = tree.find("./description")
             if ele is None:
                 self.description = None
             else:
-                self.description = normalize(ElementTree.tostring(ele, encoding="unicode", method="text"))
+                self.description = normalize(ElementTree.tostring(
+                    ele, encoding="unicode", method="text"))
             ele = tree.find("./copyright")
             if ele is None:
                 self.copyright_owner = None
@@ -92,7 +94,7 @@ class Entry:
             self.version_number = None
             self.ctan_path = None
 
-    def is_free(self):
+    def is_free(self) -> bool:
         if self.license_type is None:
             return True
         return self.license_type not in non_free_licenses

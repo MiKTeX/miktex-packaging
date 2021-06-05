@@ -1,0 +1,472 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2005 by Ulrich M. Schwarz
+%
+% This file may be distributed and/or modified under the conditions of
+% the LaTeX Project Public License, either version 1.3a or, at your
+% option, any later version. The latest version of this license is in
+%
+% http://www.latex-project.org/lppl.txt
+%
+% \fi
+%
+%\iffalse (hide this from DocInput)
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{12many}
+\GetFileInfo{12many.sty}
+\usepackage[T1]{fontenc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{12many.dtx}
+\end{document}
+%</driver>
+%<*sty>
+%\fi
+%
+% \CharacterTable
+% {Upper-case \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+% Lower-case \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+% Digits \0\1\2\3\4\5\6\7\8\9
+% Exclamation \! Double quote \" Hash (number) \#
+% Dollar \$ Percent \% Ampersand \&
+% Acute accent \' Left paren \( Right paren \)
+% Asterisk \* Plus \+ Comma \,
+% Minus \- Point \. Solidus \/
+% Colon \: Semicolon \; Less than \<
+% Equals \= Greater than \> Question mark \?
+% Commercial at \@ Left bracket \[ Backslash \\
+% Right bracket \] Circumflex \^ Underscore \_
+% Grave accent \` Left brace \{ Vertical bar \|
+% Right brace \} Tilde \~}
+% \CheckSum{160}
+%
+% \DoNotIndex{\@for,\addtocounter,\arabic,\csname,\endcsname,\cup,\CurrentOption}
+% \DoNotIndex{\{,\},\do,\define@key,\def,\DeclareOption,\else,\ensuremath,\expandafter}
+% \DoNotIndex{\hspace,\fi,\rule,\ifcase,\ifx,\in,\InputIfFileExists,\leq,\let,\mathpalette}
+% \DoNotIndex{\NeedsTeXFormat,\ldots,\ldotp,\newcommand,\newcounter,\or}
+% \DoNotIndex{\PackageInfo,\PackageWarning,\parm,\ProcessOptions,\protected@edef}
+% \DoNotIndex{\providecommand,\ProvidesPackage,\relax,\renewcommand,\RequirePackage}
+% \DoNotIndex{\setcounter,\setkeys,\rlap,\setminus,\widthof,\mathrm}
+%
+%\changes{0.3}{2005/05/09}{Changed to dtx/ins}
+%
+% \newcommand\pkg{\textsf}
+% \newcommand\otm{\textsf{1, 2, many}}%
+% \newcommand\otmstyle{\texttt}%
+%
+% \title{The \otm{} package\ignorespaces
+%   \thanks{This documents \otm{}~\fileversion\ of~\filedate}}
+% \author{Ulrich M. Schwarz\thanks{\texttt{ulmi@users.sarovar.org}}}
+%
+%   \maketitle
+%   \begin{abstract}
+%     In the discrete branches of mathematics and the computer sciences,
+%     it will only take some seconds until you're faced with a set like
+%     $\{1,\ldots,m\}$. Only some people write $1\ldotp\ldotp m$, or $\{j:1\leq
+%     j\leq m\}$, and that journal you're submitting to might want
+%     something else entirely. \otm{} provides an interface that makes
+%     changing from one to another a one-line change.
+%   \end{abstract}
+%
+%   \tableofcontents
+%
+% \section{Command overview}\label{sec:command-overview}
+%
+% To use \otm{} in your \LaTeX{} document, place 12many.sty into your
+% local texmf tree and load it by \verb|\usepackage{12many}|. Three
+% in-document commands are provided:
+% \DescribeMacro{\nto}
+%   \cs{nto}\marg{from}\marg{to} takes two arguments and typesets the
+%   range from the first to the second, ends inclusive: |\nto{3}{4}|
+%   might yield something like $\nto{3}{4}$.
+%
+% \DescribeMacro{\ito}
+%   \cs{ito} is an alias to |\nto{1}|, i.e. \verb|\ito{3}| is
+%   \verb|\nto{1}{3}| and yields $\ito3$.
+%
+% \DescribeMacro{\oto}
+%   \cs{oto} is an alias to |\nto{0}|, i.e. \verb|\ito{3}| is
+%   \verb|\nto{0}{3}| and yields $\oto3$.
+% %
+% \DescribeMacro{\setOTMstyle} 
+% To select the style, use \cs{setOTMstyle}\oarg{params}\marg{style},
+% where style is a style name, and params are style-specific options in
+% a key=val fashion. For a list of pre-defined styles and their options,
+% see section~\ref{sec:pre-defined-styles}. It's as simple as that!
+% If you don't need to change the default parameters of a style, you
+% can also pass it as a package option: \verb|\usepackage[laue]{12many}|
+%
+%
+% \section{Pre-defined styles}\label{sec:pre-defined-styles}
+%
+% The following styles are predefined by \otm:
+%
+% \subsection{Style \otmstyle{set}}
+% \label{sec:style:set}\setOTMstyle{set} 
+% The ``proper'' way of specifying a range: $\nto{2}{233}$. Supported
+% parameters:
+% \begin{description}
+% \item [var] The variable name to use. Default: the popular
+%   scratch integer $i$.
+% \item [naturals] The way you write the set of natural numbers, $0$
+%   included. Defaults to the (rather ugly) |\mathrm{N}_0|
+%   $\mathrm{N}_0$, but depending on your style, you'll use blackboard,
+%   boldface or even fraktur here.
+% \item [where] This goes between the naturals set symbol and the
+%   lower bound. I've seen both colons and bars used here, and you
+%   might want to do fancy extra spacing. The default is \verb.|.
+% \end{description}
+%
+% \subsection{Style \otmstyle{dots}}
+% \label{sec:style:dots}\setOTMstyle{dots} 
+% The somewhat less formal enumeration style: $\nto{2}{233}$. Supported
+% parameters:
+% \begin{description}
+% \item [dots] What goes between the bounds. The default,
+%   |,\ldots,|, is the most formal one but takes up a lot of
+%   horizontal space, so you might use something like
+%   |,\ldotp\ldotp| here.
+% \end{description}
+%
+% \subsection{Style \otmstyle{nude}}
+% \label{sec:style:nude}\setOTMstyle{nude} 
+% An even less formal enumeration style, popular with economics and CS
+% people, but certainly not mathematicians: $\nto{2}{233}$. Supported
+% parameters:
+% \begin{description}
+% \item [dots] Works just like in the case of dots-style, but for
+%   nude, it defaults to |\ldotp\ldotp|.
+% \end{description}
+%
+% \subsection{Style \otmstyle{laue}}
+% \label{sec:style:laue}\setOTMstyle{laue}
+% A style championed by a local maths professor: $\ito{233}$. (Note that
+% this is the one-to variant. The other variants are derived from this:
+% $\oto{233}$ and $\nto{2}{233}$. Also note that the outer parens are
+% added by \otm\ to make sure the semantics do not change.) Supported parameters:
+% \begin{description}
+% \item [setminus] Used for the variants that do not start at $0$ or
+%   $1$. Defaults to |\setminus|.
+% \item [setplus] Used to add in the $\{0\}$. Defaults to
+%   |\cup|.
+% \item [ybelow] How far below the baseline the rule is. I don't think
+%   you'd need to change this---the default of $0.3$ ex looks good to me
+%   in Computer Modern, Palatino and Utopia/Fourier.
+% \item [strokewidth] The width of the rule, with a default of $0.08$ ex.
+% \item [innersidegap] The rule protudes beyond the number above it,
+%   by default by $0.05$ em.
+% \item [outersidegap] There is an additional space after the hook, by
+%   default $0.05$ em.
+% \end{description}
+%
+% \section{Creating new styles}\label{sec:creating-new-styles}
+%
+% If none of the styles above float your boat, you can still define your
+% own. To this end, \otm{} provides three commands:
+%
+% \DescribeMacro{\newOTMstyle}
+% \cs{newOTMstyle}\oarg{params}\marg{name}\marg{definition} takes three
+% arguments: optional parameters, the style name and its definition. The
+% definition has access to the bounds that are passed in the parameters
+% |#1| (lower) and |#2| (upper). For example, the dots style is defined
+% like this: 
+% \begin{verbatim}
+% \newOTMstyle[dots={,\ldots,}]{dots}{%
+%   \{#1\getOTMparameter{dots}#2\}%
+% }
+% \end{verbatim}
+% {\em
+%   Please be careful when declaring parameters with the optional
+%   arguments: spaces are not stripped. If you declare
+%   \verb*|foo=bar, baz=bam|, |\getOTMparameter{baz}| won't find anything.}
+%
+% \DescribeMacro{\renewOTMstyle} This macro is just the same as
+% |\newOTMstyle|, only a newcommand in a crucial place is changed to a
+% renewcommand, i.e. this can be used to change an existing style.
+%
+% \DescribeMacro{\newOTMparameter} This macro declares parameters and
+% their defaults to a style. For example, we have already seen that the
+% dots style accesses its dots with |\getOTMparameter{dots}|. This
+% parameter was declared with
+% \begin{verbatim}
+% \newOTMparameter{dots}{dots}{,\ldots,}
+% \end{verbatim}
+% i.e., ``(style) \otmstyle{dots} has a parameter \texttt{dots} that
+% defaults to $,\ldots,$''.
+%
+% \subsection{Configuration files}
+%   \otm{} will also look for your new style declarations in a file
+%   called \verb|12many.cfg|. This file is read in before the package
+%   parameter is evaluated, so it's legal to name a style that will only
+%   be defined in \verb|12many.cfg|.
+% \StopEventually{\PrintChanges\PrintIndex}
+% %
+% %
+% %
+% %
+% %
+% %
+% \section{Implementation}
+% First of all, we identify ourselves, and require packages we need.
+%
+%    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{12many}[2005/05/09 v0.3 1, 2, many: numbersets  (ums)]
+
+\RequirePackage{calc, keyval}
+%    \end{macrocode}
+%
+% \subsection{Providing new styles and their parameters}
+%
+% First of all, we define the two commands for defining and changing
+% styles. We do this with a two-level redirection because they really do
+% the same thing, apart from the fact that one uses \cs{newcommand} and
+% one uses \cs{renewcommand}.
+%
+% \begin{macro}{\newOTMstyle}
+%    \begin{macrocode}
+\newcommand\newOTMstyle{%
+  \let\otm@@newcmd\newcommand
+  \otm@@fooOTMstyle
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\renewOTMstyle}
+%    \begin{macrocode}
+\newcommand\renewOTMstyle{%
+  \let\otm@@newcmd\renewcommand
+  \otm@@fooOTMstyle
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\otm@@fooOTMstyle}
+%   This macro does the real work. Note that we designate internal
+%   macros with |\otm@@|, since we store style info below |\otm@|. If
+%   the user gives parameter definitions, we pass each to
+%   \cs{otm@@newkvOTMparameter}. Finally, we assemble the name of the
+%   style macro and call \cs{(re)newcommand*}. Note that we still have a
+%   parameter left from the call to \cs{newOTMstyle}, and that is the
+%   definition. 
+%    \begin{macrocode}
+\newcommand*\otm@@fooOTMstyle[2][\relax]{%
+  \ifx #1\relax\else
+  \@for\parm:=#1\do{%
+    \expandafter\otm@@newkvOTMparameter\parm={#2}%
+  }%
+  \fi
+  \expandafter\otm@@newcmd\expandafter*\csname otm@style@#2\endcsname[2]%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% Next, we disassemble a new user parameter definition. To be rechecked:
+% I'm sure \textsf{keyval} can do all of that.
+%
+% \begin{macro}{otm@@newkvOTMparameter}
+%    \begin{macrocode}
+\def\otm@@newkvOTMparameter#1=#2=#3{%
+  \newOTMparameter{#3}{#1}{#2}%
+}
+%    \end{macrocode}
+%\end{macro}
+% \begin{macro}{newOTMparameter}
+%   This is either called directly by the user, or we have massaged the
+%   optional argument of \cs{newOTMstyle} sufficiently by now, so that
+%   we can just tell \textsf{keyval} about the new parameter.
+%    \begin{macrocode}
+\newcommand\newOTMparameter[3]{%
+  \expandafter\providecommand\csname otm@#1@#2\endcsname{#3}%
+  \define@key{otm@#1}{#2}{\expandafter\renewcommand\csname otm@#1@#2\endcsname{##1}}%
+}
+%    \end{macrocode}
+%\end{macro}
+%
+% \begin{macro}{setOTMparameter}
+%   This is just a simple setter. We use \cs{renewcommand} since all
+%   params are already setup at declaration time. The third parameter is
+%   picked up by partial application.
+%    \begin{macrocode}
+\newcommand\setOTMparameter[2]{%
+  \expandafter\renewcommand\csname otm@#1@#2\endcsname%
+}
+%    \end{macrocode}
+%\end{macro}
+%
+% \begin{macro}{getOTMparameter}
+%   Just hiding the internal macro name. Note that we are slightly
+%   asymmetric, since here the style parameter is optional. The reason
+%   for this is that this is usually called from within a \cs{nto},
+%   where the style is clear from context. Still, giving a style name
+%   here allows for very rudimentary inheritance.
+%    \begin{macrocode}
+\newcommand\getOTMparameter[2][\otm@@currentstyle]{%
+  \csname otm@#1@#2\endcsname%
+}
+%    \end{macrocode}
+%\end{macro}
+%
+% \begin{macro}{setOTMstyle}
+%   With all the preliminaries defined, setting the style is easy: we
+%   remember the style name for \cs{getOTMparameter} purposes,
+%   let \textsf{keyval} set the parameters, and \cs{let} \cs{nto} to the
+%   appropriate macro.
+%    \begin{macrocode}
+\newcommand*\setOTMstyle[2][]{%
+  \protected@edef\otm@@currentstyle{#2}%
+  \PackageInfo{12many}{Using style \otm@@currentstyle[#1]}%
+  \setkeys{otm@\otm@@currentstyle}{#1}%
+  \expandafter\let\expandafter\nto\csname otm@style@\otm@@currentstyle\endcsname%
+}
+%    \end{macrocode}
+%\end{macro}
+%
+% \begin{macro}{nto}
+%   This is just a preliminary fallback definition---\cs{nto} is set to
+%   something better by \cs{setOTMstyle}. We log a warning and go to a
+%   vaguely sane default. The re-defined \cs{nto} will then pick up the
+%   parameters. 
+%    \begin{macrocode}
+\newcommand\nto{%
+  \PackageWarning{12many}{No style selected. Using dots.}%
+  \setOTMstyle{dots}%
+  \nto%
+}
+%    \end{macrocode}
+%\end{macro}
+%
+% Ironically, the two most-used macros of this package are also the shortest.
+%\begin{macro}{oto}
+%    \begin{macrocode}
+\newcommand\oto{\nto{0}}
+%    \end{macrocode}
+%\end{macro}
+%\begin{macro}{ito}
+%    \begin{macrocode}
+\newcommand\ito{\nto{1}}
+%    \end{macrocode}
+%\end{macro}
+%
+
+
+%\subsection{Predefined styles}
+%
+%\subsubsection{\otmstyle{set}}
+%
+%This is a very simple style, but it demonstrates the power of the
+%keyval system.
+%    \begin{macrocode}
+%% Style "`set"': the "`proper way"': {i\in N: x<=i<=y}
+\newOTMstyle[var=i,naturals={\mathrm{N}_0},where=|]{set}{%
+  \{\getOTMparameter{var}\in\getOTMparameter{naturals}%
+  \getOTMparameter{where} #1\leq\getOTMparameter{var}\leq#2\}%
+}
+%    \end{macrocode}
+%
+%\subsubsection{\otmstyle{laue}}
+%
+%This is a bit more involved and involves manual drawing of rules, to
+%yield something that looks a little like \cs{rharpoon}. 
+%    \begin{macrocode}
+%% Style "`laue"': 1 to n is n with some sort of rharpoon below.
+\newcounter{otm@scratch}
+
+\newOTMstyle{laue}{%
+%    \end{macrocode}
+% Since we can only give one definition, that for \cs{nto}, we need to
+% distinguish cases here since \otmstyle{laue} defines itself via the
+% one-to case. Note that the third case need not handle the case that
+% the range starts at $0$ or $1$, hence we don't subtract one-element
+% sets. Note also that this doesn't cater for |\oto{0}|, but that really
+% should be obvious at the writer-level.
+%    \begin{macrocode}
+  \ifcase#1\relax
+  (\{0\}\otm@laue@setplus\otm@@laue@laue{#2})%
+  \or
+  \otm@@laue@laue{#2}%
+  \else
+  \setcounter{otm@scratch}{#1}%
+  \addtocounter{otm@scratch}{-1}%
+  (\otm@@laue@laue{#2}%
+  \otm@laue@setminus\otm@@laue@laue{\arabic{otm@scratch}})%
+  \fi
+}
+%    \end{macrocode}
+%This style is actually older than the pacakge itself, so there are
+%lots of things to customize.
+%    \begin{macrocode}
+\newOTMparameter{laue}{setminus}{\setminus}
+\newOTMparameter{laue}{setplus}{\cup}
+\newOTMparameter{laue}{ybelow}{0.3ex}
+\newOTMparameter{laue}{strokewidth}{0.08ex}
+\newOTMparameter{laue}{innersidegap}{0.05em}
+\newOTMparameter{laue}{outersidegap}{0.05em}
+%    \end{macrocode}
+% Finally, the drawing proper. It took me a while to figure out how
+% \cs{mathpalette} is supposed to be used. Otherwise, nothing
+% interesting happens. Theoretically, possibly the argument could end up
+% on one line and the rule on the next, if we are very close to the end
+% of the line, but I've never seen that happen.
+%    \begin{macrocode}
+\newcommand{\otm@@laue@laue}[1]{%
+  \mathpalette{\let\laue@mathstyle}{\ensuremath{%
+      \rlap{\hspace*{\otm@laue@innersidegap}$\laue@mathstyle #1$}%
+      \rule[-\otm@laue@ybelow]%
+           {\widthof{\ensuremath{\laue@mathstyle #1}}+\otm@laue@innersidegap *2}%
+           {\otm@laue@strokewidth}%
+           \rule[-\otm@laue@ybelow]%
+                {\otm@laue@strokewidth}%
+                {\otm@laue@ybelow *2}}}}
+%    \end{macrocode}
+%
+%\subsubsection{\otmstyle{dots}}
+%Trivial.
+%    \begin{macrocode}
+%% Style "`dots"': variations of the {1,...,n} theme.
+
+\newOTMstyle[dots={,\ldots,}]{dots}{%
+  \{#1\getOTMparameter{dots}#2\}%
+}
+%    \end{macrocode}
+%
+%\subsubsection{\otmstyle{nude}}
+%Also trivial.
+%    \begin{macrocode}
+%% Style "`nude"': variations of the 1..n theme.
+
+\newOTMstyle[dots={\ldotp\ldotp}]{nude}{%
+  #1\getOTMparameter{dots}#2%
+}
+%    \end{macrocode}
+%
+%\subsection{Customization and package parameter}
+%
+%Nothing interesting happens here.
+%    \begin{macrocode}
+%%
+%% PART III: Use existing customization file
+%%
+\InputIfFileExists{12many.cfg}{%
+  \PackageInfo{12many}{Also using customization file 12many.cfg}
+}{%
+  \PackageInfo{12many}{No customization file used}
+}
+
+%%
+%% PART IV: Use package parameter
+%%
+\DeclareOption*{\setOTMstyle{\CurrentOption}}
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+%\Finale
+% \iffalse
+% </!sty>
+% X Local Variables:
+% X mode: latex
+% X End:
+% \fi

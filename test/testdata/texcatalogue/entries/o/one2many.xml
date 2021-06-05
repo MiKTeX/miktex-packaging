@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE entry SYSTEM 'catalogue.dtd'>
+<entry id='one2many' datestamp='$Date: 2016-06-24 19:18:15 +0200 (Fri, 24 Jun 2016) $' modifier='$Author: manfred $'>
+  <name>12many</name>
+  <caption>Generalising mathematical index sets</caption>
+  <authorref id='schwarz'/>
+  <copyright owner="Ulrich M. Schwarz" year='2005'/>
+  <license type='lppl' checked='2008-10-03' file='12many.dtx'
+	   version='0.3' username='robin'/>
+  <version number='0.3'/>
+  <description>
+    <p>
+    In the discrete branches of mathematics and the computer sciences, it
+    will only take some seconds before you're faced with a set like
+    {1,...,m}.  Some people write <tt>$1\ldotp\ldotp m$</tt>, others
+    <tt>$\{j:1\leq j\leq m\}$</tt>, and the journal you're submitting
+    to might want something else entirely.  The 12many package provides
+    an interface that makes changing from one to another a one-line
+    change.
+    </p>
+  </description>
+  <documentation details='Readme'
+	href='ctan:/macros/latex/contrib/12many/README'/>
+  <documentation details='Package documentation'
+	href='ctan:/macros/latex/contrib/12many/12many.pdf'/>
+  <ctan path='/macros/latex/contrib/12many'/>
+  <miktex location='12many'/>
+  <texlive location='12many'/>
+  <keyval key='topic' value='maths'/>
+</entry>

@@ -10,13 +10,13 @@ the staging directory.
 
 import sys
 
-import miktex.packaging.info.inifile
-import miktex.packaging.info.md5
-import miktex.packaging.info.texcatalogue
+from miktex.packaging.info import inifile
+from miktex.packaging.info import md5
+from miktex.packaging.info import texcatalogue
 
 if len(sys.argv) != 2:
-    sys.exit("Usage: " + sys.argv[0] + " <package-name>")
+    sys.exit("Usage: {} <package>".format(sys.argv[0]))
 
-package = sys.argv[1]
-entry = miktex.packaging.info.texcatalogue.Entry(package)
-miktex.packaging.info.inifile.write_ini_file(package, entry, miktex.packaging.info.md5.try_get_md5(package))
+package_id = sys.argv[1]
+entry = texcatalogue.Entry(package_id)
+inifile.write_ini_file(package_id, entry, md5.try_get_md5_hash(package_id))
