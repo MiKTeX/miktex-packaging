@@ -3,6 +3,7 @@
 # Licensed to you under the MIT license.  See the LICENSE file in the
 # project root for more information.
 
+import copy
 import os
 import subprocess
 import sys
@@ -57,23 +58,20 @@ def run_tdsutil(package_id: str, source: str, dst_dir: str):
     subprocess.call(tdsutil)
 
 
-def archive_source_files(package_id: str, dst_dir: str):
-    source_file_dir = os.path.normpath(os.path.join(dst_dir, "source"))
-    if not os.path.isdir(source_file_dir):
+def make_companion_package(main_package_id: str, main_entry: texcatalogue.Entry, sub_dir: str):
+    main_dir = os.path.normpath(paths.get_texmf_dir(main_package_id))
+    source_dir = os.path.normpath(os.path.join(main_dir, sub_dir))
+    if not os.path.isdir(source_dir):
         return
-    for suffix in [".cab", ".tar.bz2", ".tar.xz"]:
-        to_be_removed = os.path.join(
-            source_file_dir, package_id + "-src" + suffix)
-        if os.path.isfile(to_be_removed):
-            os.remove(to_be_removed)
-    subprocess.call("{} -cJf {}-src.tar.xz *".format(paths.TAR_EXECUTABLE,
-                                                     package_id), cwd=source_file_dir, shell=True)
-    sub_dirs = []
-    for entry in os.scandir(source_file_dir):
-        if entry.is_dir():
-            sub_dirs.append(entry.path)
-    for subdir in sub_dirs:
-        filesystem.remove_directory(subdir)
+    package_id = "{}-{}".format(main_package_id, sub_dir)
+    package_dir = os.path.normpath(paths.get_package_dir(package_id))
+    if os.path.isdir(package_dir):
+        filesystem.remove_directory(package_dir)
+    dest_dir = os.path.normpath(paths.get_texmf_dir(package_id))
+    filesystem.move_directory(source_dir, dest_dir)
+    entry = copy.copy(main_entry)
+    entry.name = None
+    inifile.write_ini_file(package_id, entry, md5.try_get_md5_hash(package_id))    
 
 
 def main():
@@ -103,7 +101,8 @@ def main():
     else:
         run_tdsutil(package_id, source, dst_dir)
     filesystem.remove_empty_directories(dst_dir)
-    archive_source_files(package_id, dst_dir)
+    make_companion_package(main_package_id=package_id, main_entry=entry, sub_dir="doc")
+    make_companion_package(main_package_id=package_id, main_entry=entry, sub_dir="source")
     inifile.write_ini_file(package_id, entry, md5.try_get_md5_hash(package_id))
 
 

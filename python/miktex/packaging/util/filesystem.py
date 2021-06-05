@@ -20,6 +20,12 @@ def explore_directories(directories: list):
         subprocess.call(["emacs"] + directories)
 
 
+def move_directory(from_path: str, to_path:str):
+    """Move a directory."""
+    os.makedirs(to_path)
+    shutil.move(from_path, to_path)
+
+
 def remove_directory(path: str):
     """Remove a directory.  We need this because the Windows version of  shutil.rmtree() seems to be broken."""
     if platform.system() == "Windows":
