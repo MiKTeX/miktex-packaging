@@ -40,7 +40,7 @@ def _compare_to_previous_version(file: str) -> str:
     result = None
     if os.path.isfile(prev_file):
         diff_file = "{}.diff.txt".format(file)
-        with io.open(diff_file, mode="wb", encoding="utf-8") as diff_output:
+        with io.open(diff_file, mode="w", encoding="utf-8") as diff_output:
             subprocess.call([paths.DIFF_EXECUTABLE, "-c2", prev_file, file],
                             stdout=diff_output)
         stat_info = os.stat(diff_file)
