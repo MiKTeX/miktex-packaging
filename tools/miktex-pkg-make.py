@@ -28,10 +28,10 @@ special_tds_zip_files = {
     "latex-firstaid": "/install/macros/latex/required/latex-firstaid.tds.zip",
     "latex-firstaid-dev": "/install/macros/latex-dev/required/latex-firstaid-dev.tds.zip",
     "latex-graphics-dev": "/install/macros/latex-dev/required/latex-graphics-dev.tds.zip",
+    "latex-tools": "/install/macros/latex/required/latex-tools.tds.zip",
     "latex-tools-dev": "/install/macros/latex-dev/required/latex-tools-dev.tds.zip",
     "ltxbase": "/install/macros/latex/latex-base.tds.zip",
     "pgf": "/install/graphics/pgf/base/pgf.tds.zip",
-    "tools": "/install/macros/latex/required/latex-tools.tds.zip",
 }
 
 

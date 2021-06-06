@@ -28,7 +28,6 @@ ctan_packages = {
     "finbib": "finplain",
     "ltxbase": "latex-base",
     "pstricks": "pstricks-base",
-    "tools": "latex-tools",
 }
 
 non_free_licenses = {
