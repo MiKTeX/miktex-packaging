@@ -103,8 +103,9 @@ def main():
     else:
         run_tdsutil(package_id, source, dst_dir)
     filesystem.remove_empty_directories(dst_dir)
-    make_companion_package(main_package_id=package_id,
-                           main_entry=entry, sub_dir="doc")
+    if not entry.ctan_path.startswith("/info/") and not package_id.endswith("-doc"):
+        make_companion_package(main_package_id=package_id,
+                               main_entry=entry, sub_dir="doc")
     make_companion_package(main_package_id=package_id,
                            main_entry=entry, sub_dir="source")
     inifile.write_ini_file(package_id, entry, md5.try_get_md5_hash(package_id))
