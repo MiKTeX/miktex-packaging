@@ -86,7 +86,7 @@ class PackageInfo:
             f.writelines(lines)
         if self.description:
             with io.open(get_description_filename(self.package), mode="w", encoding="utf-8") as f:
-
+                f.write(self.description)
 
 def write_ini_file(package_id: str, entry: texcatalogue.Entry, md5_hash: str = None):
     """Write a package information file.
