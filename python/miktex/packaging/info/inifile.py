@@ -75,7 +75,7 @@ class PackageInfo:
         if self.version:
             lines.append("version={}\n".format(self.version))
         if self.license_type:
-            lines.append("license_type=\n{}".format(self.license_type))
+            lines.append("license_type={}\n".format(self.license_type))
         if self.ctan_path:
             lines.append("ctan_path={}\n".format(self.ctan_path))
         if self.md5:
@@ -86,7 +86,6 @@ class PackageInfo:
             f.writelines(lines)
         if self.description:
             with io.open(get_description_filename(self.package), mode="w", encoding="utf-8") as f:
-                f.write(self.description)
 
 
 def write_ini_file(package_id: str, entry: texcatalogue.Entry, md5_hash: str = None):
