@@ -103,7 +103,7 @@ def main():
     else:
         run_tdsutil(package_id, source, dst_dir)
     filesystem.remove_empty_directories(dst_dir)
-    if not entry.ctan_path.startswith("/info/") and not package_id.endswith("-doc"):
+    if not entry.ctan_path.startswith("/info/") and not package_id.endswith("-doc") and not package_id.endswith("-manual"):
         make_companion_package(main_package_id=package_id,
                                main_entry=entry, sub_dir="doc")
     make_companion_package(main_package_id=package_id,
