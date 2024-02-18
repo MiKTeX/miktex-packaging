@@ -12,7 +12,7 @@ the following:
 __This issue tracker is not for software bugs (defects in MiKTeX programs).__
 
 __Please do not request a packages update unless the MiKTeX version
-lacks behind the CTAN more then a month.__
+lacks behind the CTAN more than a month.__
 
 __Please do not report functional package problems (e.g., `! Undefined control sequence.`).__
 
