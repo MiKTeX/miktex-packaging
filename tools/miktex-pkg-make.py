@@ -31,6 +31,7 @@ special_tds_zip_files = {
     "latex-tools": "/install/macros/latex/required/latex-tools.tds.zip",
     "latex-tools-dev": "/install/macros/latex-dev/required/latex-tools-dev.tds.zip",
     "ltxbase": "/install/macros/latex/latex-base.tds.zip",
+    "musixtex": "/install/macros/musixtex.tds.zip",
     "pgf": "/install/graphics/pgf/base/pgf.tds.zip",
 }
 
