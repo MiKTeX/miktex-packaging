@@ -39,8 +39,9 @@ special_tds_zip_files = {
 def unpack_tds_zip_file(tds_zip_file: str, dst_dir: str):
     print("unpacking {} to {}".format(tds_zip_file, dst_dir))
     os.makedirs(dst_dir)
-    subprocess.call([paths.UNZIP_EXECUTABLE, "-o",
-                     "-qq", tds_zip_file, "-d", dst_dir])
+    subprocess.call(["/usr/bin/7z", "x", "-o"+dst_dir, tds_zip_file])
+#    subprocess.call([paths.UNZIP_EXECUTABLE, "-o",
+#                     "-qq", tds_zip_file, "-d", dst_dir])
 
 
 def run_tdsutil(package_id: str, source: str, dst_dir: str):
